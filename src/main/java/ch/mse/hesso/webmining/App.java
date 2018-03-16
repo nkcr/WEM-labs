@@ -11,19 +11,23 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
+import org.apache.solr.common.params.MapSolrParams;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
 public class App {
-    private static final String SORL_BASE_URL = "http://localhost:8983/solr/";
-    private static final String SORL_CORE = "localch";
 
     /*
     * Dummy parser which is only indexing raw HTML data
@@ -77,6 +81,7 @@ public class App {
         }
     };
 
+
     public static void main(String[] args) {
         String crawlStorageFolder = "./crawl/root";
         int numberOfCrawlers = 3;
@@ -86,7 +91,7 @@ public class App {
         config.setCrawlStorageFolder(crawlStorageFolder);
 
         //Instantiate solr client
-        SolrClient solr = initSolorClient(SORL_BASE_URL+SORL_CORE);
+        SolrClient solr = initSolorClient(CONNECTION.SORL_BASE_URL+CONNECTION.SORL_CORE);
 
         /*
          * Instantiate the controller for this crawl.
@@ -112,6 +117,7 @@ public class App {
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
+
     }
 
 
