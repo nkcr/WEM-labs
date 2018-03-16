@@ -19,8 +19,8 @@ public class Querying {
         //Instantiate solr client
         SolrClient solrClient = initSolorClient(CONNECTION.SORL_BASE_URL+CONNECTION.SORL_CORE);
 
-        SolrDocumentList documents =  applyQuery(solrClient, "name:castella");
-        displayResults(documents, new String[]{"name"});
+        SolrDocumentList documents =  applyQuery(solrClient, "name:\"castella alexandre\"");
+        displayResults(documents, new String[]{"name", "address", "phone"});
 
     }
 
@@ -28,6 +28,7 @@ public class Querying {
         SolrDocumentList documents = null;
         Map<String, String> queryParamMap = new HashMap<String, String>();
         queryParamMap.put("q", query);
+        queryParamMap.put("fl", "*, score");
         MapSolrParams queryParams = new MapSolrParams(queryParamMap);
         try {
             final QueryResponse response = solrClient.query(queryParams);
@@ -43,7 +44,7 @@ public class Querying {
     private static void displayResults(SolrDocumentList documents, String[] fieldnames){
         for (SolrDocument document : documents) {
             for(String fieldname: fieldnames){
-                System.out.printf("%s : %s \n", fieldname, document.getFieldValue(fieldname));
+                System.out.printf("%s : %s - score: %f\n", fieldname, document.getFieldValue(fieldname), document.getFieldValue("score"));
             }
             System.out.println("");
         }
