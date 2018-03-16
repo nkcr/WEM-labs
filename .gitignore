@@ -1,4 +1,4 @@
-.idea/
-target/
-crawl/
-webmininglab1.iml
+**/.idea/
+**/target/
+lab1/crawl/
+lab1/webmininglab1.iml
