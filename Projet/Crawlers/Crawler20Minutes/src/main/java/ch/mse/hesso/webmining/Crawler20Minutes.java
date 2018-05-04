@@ -101,7 +101,7 @@ public class Crawler20Minutes {
 
     public static void main(String[] args) {
         String crawlStorageFolder = "./crawl/root";
-        int numberOfCrawlers = 1;
+        int numberOfCrawlers = 8;
 
         /*************************************************************/
         /*************** Set Config for crawler **********************/

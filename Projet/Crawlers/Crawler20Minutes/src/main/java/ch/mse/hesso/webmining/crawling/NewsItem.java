@@ -27,7 +27,7 @@ public class NewsItem {
                 .add("html", html)
                 .add("tags", tags)
                 .add("source", source)
-                .add("crawlData", crawlDate)
+                .add("crawlDate", crawlDate)
                 .add("articleDate", articleDate)
                 .add("title", title)
                 .get();
