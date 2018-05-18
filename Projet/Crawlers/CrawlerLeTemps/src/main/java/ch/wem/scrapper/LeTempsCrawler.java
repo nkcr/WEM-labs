@@ -44,9 +44,8 @@ public class LeTempsCrawler extends WebCrawler {
             String html = htmlParseData.getHtml();
             Document doc = Jsoup.parse(html);
             Element title = doc.selectFirst("#block-letemps-content > article > div.container > div > div.col-sm-9.col-md-6 > div.article-content.article-content-inset.gallery.main-content > h1 > span");
-            Element article = doc.selectFirst("#block-letemps-content > article > div.container > div > div.col-sm-9.col-md-6 > div.article-content.article-content-inset.gallery.main-content > div.article_body");
+            Element article = doc.selectFirst("#block-letemps-content > article > div.container > div > div.col-sm-9.col-md-6 > div.article-content.article-content-inset.gallery.main-content > div.article_body > div.body_content");
             List<String> tags = doc.select("#block-letemps-content > article > div.container > div > div.col-sm-3.col-md-2 > section > p.tags").select("b").eachText();
-
             Element date = doc.select("meta[itemprop='datePublished']").first();
             Long dateUnix = date != null ? parseDate(date.attr("content")) : 0l;
 
