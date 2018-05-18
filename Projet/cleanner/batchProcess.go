@@ -44,7 +44,6 @@ func main() {
 		wg.Add(1)
 		go bb(session, i, size, &wg)
 	}
-
 	wg.Wait()
 }
 
@@ -62,7 +61,6 @@ func bb(session *mgo.Session, i int, size int, wg *sync.WaitGroup) {
 		processDate(articles[a], bulk)
 	}
 	bulk.Run()
-
 }
 
 func process(article *Article, bulk *mgo.Bulk) {
@@ -72,7 +70,6 @@ func process(article *Article, bulk *mgo.Bulk) {
 	doc.Find("p").Each(func(i int, el *goquery.Selection) {
 		text += strings.TrimSpace(el.Text())
 	})
-	text = strings.TrimSpace(text)
 	article.ClearedHTML = text
 	bulk.Update(bson.M{"_id": article.Id}, bson.M{"$set": bson.M{"clearedHTML": article.ClearedHTML}})
 }
