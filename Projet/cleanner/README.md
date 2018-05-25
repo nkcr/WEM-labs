@@ -1,7 +1,7 @@
 Example of `processLine.py` usage:
 
 ```
-echo "Monsieur le président à mangé sa chausette en conduisant son volant." | python3 textProcessing.py > test.txt
+$ echo "Monsieur le président à mangé sa chausette en conduisant son volant." | python3 textProcessing.py > test.txt
 ```
 
 will wite to *stdin*:
