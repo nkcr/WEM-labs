@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
-	"gopkg.in/mgo.v2"
-	"gopkg.in/mgo.v2/bson"
+	"os"
 	"strings"
 	"sync"
 	"time"
-	"os"
+
+	"github.com/PuerkitoBio/goquery"
+	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 const DB = "news"
@@ -90,4 +91,3 @@ func batch(session *mgo.Session, start int, size int) []*Article {
 	session.DB(DB).C(COL).Find(bson.M{}).Skip(start).Limit(size).All(&articles)
 	return articles
 }
-

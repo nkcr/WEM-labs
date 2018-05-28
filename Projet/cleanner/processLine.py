@@ -1,11 +1,12 @@
 import sys
-import nltk
+#import nltk
 from nltk.tokenize import word_tokenize
 #nltk.download('punkt')
 from nltk.stem.snowball import SnowballStemmer
 stemmerFR = SnowballStemmer("french")
 stemmerEN = SnowballStemmer("english")
 import re
+from scipy import optimize
 
 alphaOnly = lambda w: not w.replace('"', '').replace("'", '')\
           .replace(".", '').replace(",", '').isnumeric()
@@ -18,7 +19,7 @@ def clean_str(string):
   """Original taken
   from https://github.com/yoonkim/CNN_sentence/blob/master/process_data.py
   """
-  string = re.sub(r"[^A-Za-z0-9(),!?\'\`èéàÉÀêÊçÇ]", " ", string)
+  string = re.sub(r"[^A-Za-z0-9()èéàÉÀêÊçÇ]", " ", string)
   string = re.sub(r"\'s", " \'s", string)
   string = re.sub(r"\'ve", " \'ve", string)
   string = re.sub(r"n\'t", " n\'t", string)
@@ -37,7 +38,7 @@ def clean_str(string):
 def ppMaps(w):
   #w = clean_str(w)
   w = stemmerFR.stem(w)
-  w = stemmerEN.stem(w)
+  #w = stemmerEN.stem(w)
   return w
 
 def preprocessing(tokens):
