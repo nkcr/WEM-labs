@@ -120,6 +120,18 @@ Voici les étapes de purification:
 * Filtrage de tous les mots qui sont des numéros
 * Filtrage de tous les mots inférieurs à 3 caractères
 
+## Génération du corpus de mots
+
+Le notebook `cleaner/Pre_processing.ipynb` contient différentes méthodes qui nous ont permis d'extraire un corpus de mots.é partir de tous nos articles. Différents corpus on été généré et sauvegardé dans une base de données. Nous avons fait plusieurs version du corpus de mots:
+
+* *raw_corpus*: version simple avec uniquement une transformation `lower()`
+* *greater_than_two*: version se basant sur *raw_corpus* mais éliminant les mot inférieurs à 3 charactères
+* *only_alpha*: version se basant sur *greater_thant_two* mais supprimant les `numeric`
+* *french_stemmed*, *english_stemmed* et *french_english_stemmed*: version se basant sur *only_alpha* et proposant le stemming français, anglais et français + anglais respectivement
+* *special_chars*: version se basant sur *alpha_only* et supprimant tous les caractère spéciaux
+
+Ces différentes versions nous ont permis de tester plusieurs variantes. Nous avons finalement générer une version mettant en relation chaque mot de *special_chars* avec sa version *french_stemmed* sous forme d'un hash <alpha_only>: <french_stemmed>. C'est cette structure qui sera finalement utilisée. Le stemming anglais ne faisait pas sens et la gestion des stops words se fait après au niveau de la vectorisation des documents.
+
 # 3. Planification, répartition du travail
 
 # 4. Fonctionnalités / cas d’utilisation
