@@ -112,7 +112,13 @@ Cette opération est aussi effectuée dans le script `cleaner/batchProcess.go`.
 
 Ce champs contient une version purifiée du contenu textuel *ClearedHTML*. Le script qui effectue l'étape de purification se trouve dans `cleaner/processLine.py`. Python a été utilisé pour ses librairies riches de traitement de text. Pour des soucis de performance, l'exécution est effectuée en *go* par `cleaner/batchProcessPP.go`. Le script *go* va faire appel au script *python*.
 
+Voici les étapes de purification:
 
+* Tokenization à l'aide de la méthode `word_tokenize` de la librairie `nltk`
+* Remplacement de tout les caractères qui ne sont pas les suivants par des espaces: `[A-Za-z0-9()èéàÉÀêÊçÇ]`
+* Stemmization en français des mots à l'aide de `snowball` (`nltk`)
+* Filtrage de tous les mots qui sont des numéros
+* Filtrage de tous les mots inférieurs à 3 caractères
 
 # 3. Planification, répartition du travail
 
