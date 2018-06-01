@@ -68,9 +68,50 @@ Certain champs on été introduit après le crawling dans le processus de pre-pr
 
 Le tableau suivant décrit le contenu des champs:
 
-|Id|Title|Url|Html|ClearedHTML|CleanContent|Source|CrawlDate|ArticleDate|Tags|BiMonth|
-|---|---|---|---|---|---|---|---|---|---|---|
-|identificateur unique|Titre de l'article|URL de l'article|Contenu *brut* de l'article (son *body* HTML|Contenu textuel extrait du contenu *brut*|Contenu textuel après étape de *cleaning* (décrite après)|Source de l'article (RTS, le Temps, ...)|Date d'extraction du contenu sous forme de timestamp|Date de parution de l'article ou sa dernière mise à jour|Tags de l'article si disponible|Indicateur de la position du l'article par moitier de mois de l'année|
+* **Id**: identificateur unique de l'article. Utilisé par notre SGDB.
+
+* **Title**: Titre de l'article
+
+* **Url**: URL de l'article
+
+* **Html**: Contenu *brut* de l'article (son *body* HTML)
+
+* **ClearedHTML**: Contenu textuel extrait du contenu *brut*. Opération effectuée en post-processing après la phase de crawling.
+
+* **CleanContent**: Contenu textuel après étape de *cleaning* (décrite après). Opération effectuée en post-processing.
+
+* **Source**: Source de l'article (RTS, le Temps, ...)
+
+* **CrawlDate**: Date d'extraction du contenu sous forme de timestamp.
+
+* **ArticleDate**: Date de parution de l'article ou sa dernière mise à jour, également sous forme de timestamp.
+
+* **Tags**: Tags de l'article si disponible. Vu que toutes les sources n'en ont pas un, ne sera finalement pas utilisé.
+
+* **BiMonth**: Indicateur de la position du l'article par moitier de mois de l'année sous la forme <année><numéro de demi-mois>. Ainsi, le numéro 201801 indique un article paru entre début janvier et mi-janvier 2018. 201504 indique un article paru entre mi-février et fin-février 2015.
+
+## Traitement des données
+
+Il a été nécessaire d'effectuer une étape de post-traitement après le crawling pour insérer les champs suivants:
+
+* *clearedHTML*
+* *CleanContent*
+* *BiMonth*
+
+### ClearedHTML
+
+Cette étape est nécessaire pour nettoyer les balises HTML et avoir uniquement le texte des articles. Le script qui fait cette opération se situe dans `cleaner/batchProcess.go`. Le contenu est extrait en sélectionnant tout ce qui se trouve entre des balise `<p></p>`. Pour des soucis de performance l'implémentation est réalisée pour une exécution asychrone en travaillant sur des batchs de données (pour réduire les temps de transaction réseau) avec le language *go*. Ce script insère également le champs *biMonth*.
+
+### BiMonth
+
+Ce champs est nécessaire pour nous faciliter le regroupement des article par période de temps. Le découpage est fait en demi-mois afin de pouvoir sélectionner des périodes de temps que se chevauchant. En effet, un thème n'est pas forcément discuter du début d'un mois à la fin de celui-ci, mais peut se dérouler sur une période de temps chevanchant un mois. Nous sélectionerons donc des périodes se chavanchant (première pédiode se déroulant tout le mois de janvier, deuxième période de mi-janvier à mi-février, troisième période sur tout le mois de février, ect...).
+
+Cette opération est aussi effectuée dans le script `cleaner/batchProcess.go`.
+
+### CleanContent
+
+Ce champs contient une version purifiée du contenu textuel *ClearedHTML*. Le script qui effectue l'étape de purification se trouve dans `cleaner/processLine.py`. Python a été utilisé pour ses librairies riches de traitement de text. Pour des soucis de performance, l'exécution est effectuée en *go* par `cleaner/batchProcessPP.go`. Le script *go* va faire appel au script *python*.
+
 
 
 # 3. Planification, répartition du travail
