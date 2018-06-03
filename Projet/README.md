@@ -49,6 +49,10 @@ Total d'articles: **133'228**
 
 Comme support de sauvegarde, nous utilisons *MongoDB* via le service *AliCloud*. Ce service, allié avec la librairie *pyMongo*, nous permet de facilement manipuler et sauvegarder nos données.
 
+## Scripts d'extraction
+
+Les différents scripts d'extractions sont disponibles dans le dossier `Crawlers/`. Deux des crawler sont fait en *Java* avec *crawler4j* et un autre (celui pour Swissinfo et RTS) est fait en *Pyhton* avec *Scrappy*. Cette différence s'explique par les choix personnel des développeurs.
+
 ## Description
 
 Pour chaque article, la même structure a été sauvegardée. La structure de donnée typée des articles est décrite par la structure suivante:
@@ -157,6 +161,12 @@ La répartition des tâche s'est faite suivant l'intérêt et les compétence de
 |Ecriture du Readme|Tout le monde|
 
 # 4. Fonctionnalités / cas d’utilisation
+
+Notre application finale n'est pas interactive mais reste statique. Ainsi, nous proposons une illustration statiques des thêmes importants sur 30 jours, avec 24 périodes se chevanchants par années, rencontré dans nos articles. L'illustration suit l'ordre chronologique et permet à l'utilisateur de voir l'évolution et d'éventuelles corrélations ou reccurences dans les thêmes proposés.
+
+L'image suivante est un extrait de notre interface:
+
+![IHM](https://storage.googleapis.com/nkcr_personal_storage/cdn/mse/wem-ihm.png)
 
 # 5. Techniques, algorithmes et outils utilisés (aussi en lien avec votre exposé)
 Cette partie décrit les différents algorithmes utilisé afin de récupérer les thématiques importante pour une durée précise. Le notebook Jupyter utilisé pour cette partie est **TFIdf_Clustering_Analyze/TFidf_Clustering_V3.ipynb**.
