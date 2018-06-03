@@ -181,9 +181,11 @@ kmeans_fitted.fit(value_matrix,)
 KMeans fournit une quantité de paramètres permettant d'influencer le positionnement initial des clusters, le nombre d'itérations avant arrêt, etc. Concernant ce projet, seul un paramètre nous a intéressé, à savoir le nombre de clusters **n_clusters**. Ce nombre de clusters représentera le nombre de thématiques que nous souhaitons découvrir dans le corpus.
 
 La valeur finale du paramètre **n_clusters** est le suivant:
+
 | n_clusters |
 |------------|
 |      5     |
+
 Il y aura donc 5 thématiques par corpus!
 
 Cette étape va retourner l'objet kmeans afin d'être analysé.
@@ -193,6 +195,7 @@ L'objectif de cette dernière phase consiste à analyser les différents cluster
 L'idée consiste à analyser le centroide de chaque cluster. On trie ce vecteur par ordre décroissant et on récupérant les indices. Puis on garde uniquement un certain nombre de mots via un paramètre externe **nb_words_for_cluster**. Le paramètre
 
 La valeur finale du paramètre **nb_words_for_cluster** est le suivant:
+
 | nb_words_for_clusters |
 |-----------------------|
 |           6           |
