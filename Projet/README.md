@@ -45,6 +45,10 @@ Voici un résumé de la quantité d'article extrait pour chaque source:
 
 Total d'articles: **133'228**
 
+## Support de sauvegarde
+
+Comme support de sauvegarde, nous utilisons *MongoDB* via le service *AliCloud*. Ce service, allié avec la librairie *pyMongo*, nous permet de facilement manipuler et sauvegarder nos données.
+
 ## Description
 
 Pour chaque article, la même structure a été sauvegardée. La structure de donnée typée des articles est décrite par la structure suivante:
@@ -122,7 +126,7 @@ Voici les étapes de purification:
 
 ## Génération du corpus de mots
 
-Le notebook `cleaner/Pre_processing.ipynb` contient différentes méthodes qui nous ont permis d'extraire un corpus de mots.é partir de tous nos articles. Différents corpus on été généré et sauvegardé dans une base de données. Nous avons fait plusieurs version du corpus de mots:
+Le notebook `cleaner/Pre_processing.ipynb` contient différentes méthodes qui nous ont permis d'extraire un corpus de mots à partir de tous nos articles. Différents corpus on été généré et sauvegardé dans une base de données. Nous avons fait plusieurs version du corpus de mots:
 
 * *raw_corpus*: version simple avec uniquement une transformation `lower()`
 * *greater_than_two*: version se basant sur *raw_corpus* mais éliminant les mot inférieurs à 3 charactères
@@ -134,6 +138,24 @@ Ces différentes versions nous ont permis de tester plusieurs variantes. Nous av
 
 # 3. Planification, répartition du travail
 
+Pour facilité la collaboration, nous avons utilisé un service cloud pour l'hébergement des données (AliCloud avec MongoDB) et des notebook Collab.
+
+La répartition des tâche s'est faite suivant l'intérêt et les compétence de chacun, en veillant à ce qu'une part équitable de travail sois fournie par tous les membres du groupe. Le tableau suivant résume les activités de chaque membre:
+
+|Tâche|Qui|
+|---|---|
+|Extraction du site 20 minutes|Mathias|
+|Extraction du site leTemps|Simon|
+|Extraction des sites RTS et Swissinfo|Noémien|
+|Conception des algorithmes|Tout le monde|
+|Extraction du contenu HTML des articles|Simon|
+|Génération des corpus de mots et cleaning|Noémien|
+|Vectorization des documents|Mathias|
+|Génération des *biMonth*|Simon|
+|Génération des clusters|Mathias|
+|Mise en place de la vue|Noémien|
+|Ecriture du Readme|Tout le monde|
+
 # 4. Fonctionnalités / cas d’utilisation
 
 # 5. Techniques, algorithmes et outils utilisés (aussi en lien avec votre exposé)
@@ -142,11 +164,14 @@ Cette partie décrit les différents algorithmes utilisé afin de récupérer le
 ## Préparation des données
 Comme mentionné précédemment, plusieurs étapse de pré-processing ont été réalisées.La purification du contenu HTML `clearedHTML`, les étapes de stemming, suppression de charactères, etc. Une version a été choisie: *special_chars* (voir plus haut). Celle-ci a donc été appliquée sur la totalité des articles afin de créer un corpus qui prendra toute son importance à la fin du processus. Il est donc important de récupérer ce corpus depuis le SGBD.
 
-Pour le moment, il nous faut tout de même récupérer l'ensemble du dataset. On remarque en se faisant que certains articles n'ont pas de corps HTML. Environ 850 sur les 130'000 articles sont donc laissé de côté afin de simplifier le processus. Cela se fait grâce à la commande suivante:
+Pour le moment, il nous faut tout de même récupérer l'ensemble du dataset. On remarque en se faisant que certains articles n'ont pas de corps HTML. Environ 850 sur les 130'000 articles sont donc laissé sde côté afin de simplifier le processus. Cela se fait grâce à la commande suivante:
+
 ```python
 dataframe = dataframe[dataframe['clearedHTML'] != ""].reset_index()
 ```
+
 A ce stade, les données sont prêtes pour les prochaines étapes.
+
 ## TFidf-vectorization
 La vectorization tf-idf est extrêmement connue dans le domaine de la Recherche d'Information (RI). Elle permet de mettre en valeur l'importance d'un mot par rapport à un document dans une collection donnée. La librairie **sklearn** fournit une classe permettant de le faire très facilement sur un corpus donné: *TfidfVectorizer*.
 ```python
