@@ -169,9 +169,11 @@ L'image suivante est un extrait de notre interface:
 ![IHM](https://storage.googleapis.com/nkcr_personal_storage/cdn/mse/wem-ihm.png)
 
 # 5. Techniques, algorithmes et outils utilisés (aussi en lien avec votre exposé)
+
 Cette partie décrit les différents algorithmes utilisé afin de récupérer les thématiques importante pour une durée précise. Le notebook Jupyter utilisé pour cette partie est **TFIdf_Clustering_Analyze/TFidf_Clustering_V3.ipynb**.
 
 ## Préparation des données
+
 Comme mentionné précédemment, plusieurs étapse de pré-processing ont été réalisées.La purification du contenu HTML `clearedHTML`, les étapes de stemming, suppression de charactères, etc. Une version a été choisie: *special_chars* (voir plus haut). Celle-ci a donc été appliquée sur la totalité des articles afin de créer un corpus qui prendra toute son importance à la fin du processus. Il est donc important de récupérer ce corpus depuis le SGBD.
 
 Pour le moment, il nous faut tout de même récupérer l'ensemble du dataset. On remarque en se faisant que certains articles n'ont pas de corps HTML. Environ 850 sur les 130'000 articles sont donc laissé sde côté afin de simplifier le processus. Cela se fait grâce à la commande suivante:
@@ -183,6 +185,7 @@ dataframe = dataframe[dataframe['clearedHTML'] != ""].reset_index()
 A ce stade, les données sont prêtes pour les prochaines étapes.
 
 ## TFidf-vectorization
+
 La vectorization tf-idf est extrêmement connue dans le domaine de la Recherche d'Information (RI). Elle permet de mettre en valeur l'importance d'un mot par rapport à un document dans une collection donnée. La librairie **sklearn** fournit une classe permettant de le faire très facilement sur un corpus donné: *TfidfVectorizer*.
 ```python
 vectorizer = TfidfVectorizer()
@@ -205,7 +208,9 @@ Les valeurs finales des paramètres pour cette partie sont les suivantes:
 |   0.8  |   0.1   |   french   | pré-processing function  |      1      |
 
 L'étape de vectorization tf-idf permet de créer un tableau à deux dimensions avec comme colonnes les mots et comme lignes les documents. La vectorization retourne également une liste afin de retrouver à partir de l'index de la colonne le mot correspondant.
+
 ## Classification non supervisée: clustering
+
 L'étape précédente retourne donc un tableau 2D qui pourra utilisé dans cette étape. L'objectif est de retrouver **N** différents thématiques les plus abordées durant une certaine période. Étant donné que les labels sont inexistants, partir sur une approche non supervisée semble être approprié. Le clustering a été choisi car il permet de regrouper en clusters des documents. Le but sera après de traiter les clusters séparément afin de récupérer la thématique propre à chaque partition.
 
 La librairie **sklearn** fournit une classe permettant de faire du clustering: *KMeans*. Cet algorithme de clustering nonhiérarchique, bien connu, est implémenté par la librairie. Voici sonutilisation dans le cadre de ce projet:
@@ -224,7 +229,9 @@ La valeur finale du paramètre **n_clusters** est le suivant:
 Il y aura donc 5 thématiques par corpus!
 
 Cette étape va retourner l'objet kmeans afin d'être analysé.
+
 ## Analyse du Clustering
+
 L'objectif de cette dernière phase consiste à analyser les différents clusters. En utilisant le résultat du clustering, le vocabularie fournit par la tf-idf vectorization ainsi que le corpus entier généré dans la phasedepré-processing, tout les éléments sont réunis afin de récupérer les sujets importants.
 
 L'idée consiste à analyser le centroide de chaque cluster. On trie ce vecteur par ordre décroissant et on récupérant les indices. Puis on garde uniquement un certain nombre de mots via un paramètre externe **nb_words_for_cluster**. Le paramètre
@@ -236,7 +243,9 @@ La valeur finale du paramètre **nb_words_for_cluster** est le suivant:
 |           6           |
 
 Cette phase retourne une liste contenant **n** listes de mots (n => nombre de cluster). Chaque liste de mots contiendra **m** mots (m => nb_words_for_cluster).
+
 ## Mise en forme et upload vers MongoDB
+
 Les différentes étapes mentionnées dans ce chapitres doivent être réunies afin de produire le résultats final. Tout d'abord, il faut définir les constantes pour les paramètres. Puis, il faut produire les tuples *biMonth* afin de parcourir uniquement les articles dans une certaine période de temps.
 ```python
 tuples_biMonth = [(unique_biMonth[i], unique_biMonth[i+1]) for i in range(len(unique_biMonth)-1)]
@@ -244,4 +253,36 @@ tuples_biMonth = [(unique_biMonth[i], unique_biMonth[i+1]) for i in range(len(un
 Puis on peut appliquer le processus pour chaque tuple *biMonth*: tf-idf vectorization -> clustering -> analyse du clustering. Ceci est décrit dans la méthode **topicAnalysisProcessingForMonth**. La méthode **topicAnalysisProcessing** va appliquer la méthode précédente sur chaque tuple *biMonth*.
 
 Finalement, les résultats sont stockés sous la forme d'un dictionnaire dans MongoDB.
+
+## Visualisation
+
+Pour la visualisation, la librairie *Graphviz* a été utilisée. Toutes les étapes pour générer la visualization sont disponible dans le notebook `visualization/Visualization.ipynb`.
+
+La visualisation travail avec une structure de données stockant pour chaque période les différents cluster avec leurs mots. La structure, sauvegardée une seule fois dans la DB pour ne pas devoir la générer à chaque fois, à la structure suivante:
+
+```python
+data = {
+    "201801-201802": [
+        ["cheval", "chien", "fourmis"],
+        ["bateau", "avion", "train"]
+    ],
+    "201802-201803": [
+        ["clavier", "souris", "ram"],
+        ["france", "suisse", "italie"]
+    ],
+    "201804-201805": [
+        ["lettre", "chiffre", "alphabet"],
+        ["table", "chaise", "fauteil"]
+    ],
+    "201803-201804": [
+        ["cable", "adaptateur", "ipod"],
+        ["rail", "coke", "tabac"]
+    ]
+}
+```
+
+Sous forme d'un dictionnaire, chaque clé enregistre la période de temps sous forme d'un string de *biMonth* puis comme valeur un liste pour chaque cluster contenant elle-même une liste des mots importants. La visualization va trié le dictionnaire par rapport aux clé puis parcourir les cluster et leurs mots.
+
+## Visualisation
+
 # 6. Conclusion
