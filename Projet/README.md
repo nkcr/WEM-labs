@@ -22,6 +22,8 @@ Ce projet s'inscrit dans le cours MSE "Web Mining" du semestre de printemps 2018
 
 L'objectif de notre projet est d'analyser des articles de journaux et ligne afin d'en extraire les thématiques importantes qui ressortent au fil du temps. Nous sommes donc en résumé intéressé à visualiser l'évolution des thématiques d'actualité en fonction du temps. Notre système devrait ainsi nous permettre de voir si certaines thématiques en engendrent d'autre ou si certaines thématiques sont récurentes au fil du temps. Nous espérons aussi pouvoir faire certaines déduction inatendues nous permettant de réfléchir et se sensibiliser par rapport aux médias du WEB.
 
+Notre travail n'est pas révolutionnaire par rapport aux éventuelles techiques utilisées mais se différencie par rapport aux fonctionnalités que nous proposons et la manière de traiter les données ainsi que leurs sources.
+
 # 2. Données (sources, quantité, évtl. pré-traitement, description)
 
 ## Sources
@@ -281,7 +283,7 @@ data = {
 }
 ```
 
-Sous forme d'un dictionnaire, chaque clé enregistre la période de temps sous forme d'un string de *biMonth* puis comme valeur un liste pour chaque cluster contenant elle-même une liste des mots importants. La visualization va trié le dictionnaire par rapport aux clé puis parcourir les cluster et leurs mots.
+Sous forme d'un dictionnaire, chaque clé enregistre la période de temps sous forme d'un string de *biMonth* puis comme valeur un liste pour chaque cluster contenant elle-même une liste des mots importants. La visualization va trier le dictionnaire par rapport aux clé puis parcourir les cluster et leurs mots.
 
 ## Visualisation
 
