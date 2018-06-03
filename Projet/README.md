@@ -20,7 +20,7 @@ Si vous utilisez des algorithmes, des librairies ou du code tiers il faudra le p
 
 Ce projet s'inscrit dans le cours MSE "Web Mining" du semestre de printemps 2018. L'objectif est de mettre en pratique des techniques de crawling et d'indexation sur des pages WEB afin d'en extraire des informations. Ainsi, le projet porte sur deux grosses parties: crawling du WEB et analyse des données. La partie crawling et analyse des données est libre et peut porter sur un sujet à choix suivant les éléments théoriques apportés durant le cours et d'autres ressources à choix.
 
-L'objectif de notre projet est d'analyser des articles de journaux et ligne afin d'en extraire les thématiques importantes qui ressortent au fil du temps. Nous sommes donc en résumé intéressé à visualiser l'évolution des thématiques d'actualité en fonction du temps. Notre système devrait ainsi nous permettre de voir si certaines thématiques en engendrent d'autre ou si certaines thématiques sont récurentes au fil du temps. Nous espérons aussi pouvoir faire certaines déduction inatendues nous permettant de réfléchir et se sensibiliser par rapport aux médias du WEB. 
+L'objectif de notre projet est d'analyser des articles de journaux et ligne afin d'en extraire les thématiques importantes qui ressortent au fil du temps. Nous sommes donc en résumé intéressé à visualiser l'évolution des thématiques d'actualité en fonction du temps. Notre système devrait ainsi nous permettre de voir si certaines thématiques en engendrent d'autre ou si certaines thématiques sont récurentes au fil du temps. Nous espérons aussi pouvoir faire certaines déduction inatendues nous permettant de réfléchir et se sensibiliser par rapport aux médias du WEB.
 
 # 2. Données (sources, quantité, évtl. pré-traitement, description)
 
@@ -137,9 +137,9 @@ Ces différentes versions nous ont permis de tester plusieurs variantes. Nous av
 # 4. Fonctionnalités / cas d’utilisation
 
 # 5. Techniques, algorithmes et outils utilisés (aussi en lien avec votre exposé)
-Cette partie décrit les différents algorithmes utilisé afin de récupérer les thématiques importante pour une durée précise. Le notebook Jupyter utilisé pour cette partie est **TFidf_Clustering_V3.ipynb**.
+Cette partie décrit les différents algorithmes utilisé afin de récupérer les thématiques importante pour une durée précise. Le notebook Jupyter utilisé pour cette partie est **TFIdf_Clustering_Analyze/TFidf_Clustering_V3.ipynb**.
 
-## Préparation des données 
+## Préparation des données
 Comme mentionné précédemment, plusieurs étapse de pré-processing ont été réalisées.La purification du contenu HTML `clearedHTML`, les étapes de stemming, suppression de charactères, etc. Une version a été choisie: *special_chars* (voir plus haut). Celle-ci a donc été appliquée sur la totalité des articles afin de créer un corpus qui prendra toute son importance à la fin du processus. Il est donc important de récupérer ce corpus depuis le SGBD.
 
 Pour le moment, il nous faut tout de même récupérer l'ensemble du dataset. On remarque en se faisant que certains articles n'ont pas de corps HTML. Environ 850 sur les 130'000 articles sont donc laissé de côté afin de simplifier le processus. Cela se fait grâce à la commande suivante:
@@ -151,12 +151,12 @@ A ce stade, les données sont prêtes pour les prochaines étapes.
 La vectorization tf-idf est extrêmement connue dans le domaine de la Recherche d'Information (RI). Elle permet de mettre en valeur l'importance d'un mot par rapport à un document dans une collection donnée. La librairie **sklearn** fournit une classe permettant de le faire très facilement sur un corpus donné: *TfidfVectorizer*.
 ```python
 vectorizer = TfidfVectorizer()
-vectors_words_corpus = vectorizer.fit_transform(corpus) 
+vectors_words_corpus = vectorizer.fit_transform(corpus)
 ```
-Ce qui rend cette classe particulièrement intéressante sont les différents paramètres que l'on peut décider. Voici ceux que nous avons décidé d'influencer afin d'obtenir des bons résultats. 
+Ce qui rend cette classe particulièrement intéressante sont les différents paramètres que l'on peut décider. Voici ceux que nous avons décidé d'influencer afin d'obtenir des bons résultats.
 
 * **max_df**: pourcentage maximal de documents pouvant contenir un mot, très utile dès lors que notre souhait est de récupérer les mots caractréistiques d'un certain sujet
-* **min_df**: pourcentage minimal de documents pouvant contenir un mot, si le mot n'est pas souvent mentionné, il n'est probablement pas très révélateur d'un sujet tendance 
+* **min_df**: pourcentage minimal de documents pouvant contenir un mot, si le mot n'est pas souvent mentionné, il n'est probablement pas très révélateur d'un sujet tendance
 * **stop_words**: liste de stopwords, aurait put être mis dans l'étape de pré processing mais il a été choisi de le faire ici.
 * **tokenizer**: function de tokenize qui sera appliquée par le vectorizateur avant de calculer le tf-idf. Cette fonction est la même que celle qui a été utilisée pour créer le corpus dans la phase de pré-processing. Celle-ci fait donc plus que simplement tokenizer.
 * **ngram_range**: permet de définir si le vectorizateur va calculer le tf-idf sur des bigrams, trigrams, etc.
