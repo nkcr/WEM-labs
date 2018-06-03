@@ -1,21 +1,3 @@
-Vous ajouterez sur votre dépôt un README comportant les rubriques suivantes:
-
-1. Contexte et objectifs du projet
-
-2. Données (sources, quantité, évtl. pré-traitement, description)
-
-3. Planification, répartition du travail
-
-4. Fonctionnalités / cas d’utilisation
-
-5. Techniques, algorithmes et outils utilisés (aussi en lien avec votre exposé)
-
-6. Conclusion
-
-Ce document est à compléter au fur et à mesure de l’avancement de votre projet, il vous servira de rapport une fois finalisé. Il ne doit pas être trop long, comme ordre de grandeur on imaginera un maximum de 5-6 pages imprimées. La rubrique planification doit être complétée pour la séance du vendredi 27 avril 2018.
-
-Si vous utilisez des algorithmes, des librairies ou du code tiers il faudra le préciser et citer vos sources. Vous préciserez aussi en quoi votre démarche et votre travail se différencient des approches existantes.
-
 # 1. Contexte et objectifs du projet
 
 Ce projet s'inscrit dans le cours MSE "Web Mining" du semestre de printemps 2018. L'objectif est de mettre en pratique des techniques de crawling et d'indexation sur des pages WEB afin d'en extraire des informations. Ainsi, le projet porte sur deux grosses parties: crawling du WEB et analyse des données. La partie crawling et analyse des données est libre et peut porter sur un sujet à choix suivant les éléments théoriques apportés durant le cours et d'autres ressources à choix.
@@ -150,15 +132,15 @@ La répartition des tâche s'est faite suivant l'intérêt et les compétence de
 
 |Tâche|Qui|
 |---|---|
-|Extraction du site 20 minutes|Mathias|
+|Extraction du site 20 minutes|Matthias|
 |Extraction du site leTemps|Simon|
 |Extraction des sites RTS et Swissinfo|Noémien|
 |Conception des algorithmes|Tout le monde|
 |Extraction du contenu HTML des articles|Simon|
 |Génération des corpus de mots et cleaning|Noémien|
-|Vectorization des documents|Mathias|
+|Vectorization des documents|Matthias|
 |Génération des *biMonth*|Simon|
-|Génération des clusters|Mathias|
+|Génération des clusters|Matthias|
 |Mise en place de la vue|Noémien|
 |Ecriture du Readme|Tout le monde|
 
@@ -274,17 +256,19 @@ data = {
     ],
     "201804-201805": [
         ["lettre", "chiffre", "alphabet"],
-        ["table", "chaise", "fauteil"]
+        ["table", "chaise", "fauteuil"]
     ],
     "201803-201804": [
         ["cable", "adaptateur", "ipod"],
-        ["rail", "coke", "tabac"]
+        ["rail", "cola", "tabac"]
     ]
 }
 ```
 
 Sous forme d'un dictionnaire, chaque clé enregistre la période de temps sous forme d'un string de *biMonth* puis comme valeur un liste pour chaque cluster contenant elle-même une liste des mots importants. La visualization va trier le dictionnaire par rapport aux clé puis parcourir les cluster et leurs mots.
 
-## Visualisation
-
 # 6. Conclusion
+Ce projet a permis d'entraîner et de mettre en pratique plusieurs techniques dans un même panier. Du crawling initial à la visualisation finale en passant par des étapes de pré-processing et de clustering, ce projet fut varié et intéressant. Le crawling a pris du temps, car nous avons trouvés cela intéressant de tester des crawlers différents. De plus, chaque site web source étant différent, trois développeurs n'étaient pas de trop pour implémenter les différents parseurs. Cela nous a permis de collecter une importante quantité d'articles. Pour notre objectif, 130'000 articles étaient plus que bienvenus. 
+
+Puis s'ensuivirent, en parallèle, des étapes de pré-processing et de clustering. Il a fallu nettoyer les articles et générer les différentes étapes de pré-processing. Ces étapes très importantes ont permis d'obtenir des meilleurs résultats. En parallèle, le clustering avançait et commençait à générer des thématiques intéressantes. Évidemment, certains choix se sont avérés mauvais et nous ont parfois forcés à revenir en arrière. Finalement, c'est en mettant le tout ensemble que nous pouvons déclarer aujourd'hui que nous sommes contents du résultat. Des améliorations pourraient être les bienvenus. Par exemple, il serait envisageable d'essayer certaines techniques pour garder les noms de ville ou les noms-prénoms ensemble. Un exemple serait que *New York* soit maintenu ensembles car il est quasiment impensable que ces deux mots soient dissociés l'un de l'autre. *Washington* ne souffre pas de ce défaut. De plus, bien qu'ayant été adaptés au fur et à mesure du projet, certains paramètres pourraient être testés davantage. Faute de temps, il a fallu se contenter de certaines valeurs de paramètres. Cependant, les résultats sont déjà très satisfaisants.
+
