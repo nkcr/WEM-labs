@@ -31,7 +31,7 @@ Total d'articles: **133'228**
 
 ## Support de sauvegarde
 
-Comme support de sauvegarde, nous utilisons *MongoDB* via le service *AliCloud*. Ce service, allié avec la librairie *pyMongo*, nous permet de facilement manipuler et sauvegarder nos données.
+Comme support de sauvegarde, nous utilisons *MongoDB* via le service *AlibabaCloud*. Ce service, allié avec la librairie *pyMongo*, nous permet de facilement manipuler et sauvegarder nos données.
 
 ## Scripts d'extraction
 
