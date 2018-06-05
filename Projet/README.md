@@ -218,7 +218,7 @@ Cette étape va retourner l'objet kmeans afin d'être analysé.
 
 L'objectif de cette dernière phase consiste à analyser les différents clusters. En utilisant le résultat du clustering, le vocabularie fournit par la tf-idf vectorization ainsi que le corpus entier généré dans la phasedepré-processing, tout les éléments sont réunis afin de récupérer les sujets importants.
 
-L'idée consiste à analyser le centroide de chaque cluster. On trie ce vecteur par ordre décroissant et on récupérant les indices. Puis on garde uniquement un certain nombre de mots via un paramètre externe **nb_words_for_cluster**. Le paramètre
+L'idée consiste à analyser le centroide de chaque cluster. On trie ce vecteur par ordre décroissant et on récupérant les indices. Puis on garde uniquement un certain nombre de mots via un paramètre externe **nb_words_for_cluster**.
 
 La valeur finale du paramètre **nb_words_for_cluster** est le suivant:
 
