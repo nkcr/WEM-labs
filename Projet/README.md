@@ -31,7 +31,7 @@ Total d'articles: **133'228**
 
 ## Support de sauvegarde
 
-Comme support de sauvegarde, nous utilisons *MongoDB* via le service *AliCloud*. Ce service, allié avec la librairie *pyMongo*, nous permet de facilement manipuler et sauvegarder nos données.
+Comme support de sauvegarde, nous utilisons *MongoDB* via le service *AlibabaCloud*. Ce service, allié avec les librairies *pyMongo* et son équivalent *mgo* pour Go, nous permet de facilement manipuler et sauvegarder nos données dans une base de données orientées documents.
 
 ## Scripts d'extraction
 
@@ -218,7 +218,7 @@ Cette étape va retourner l'objet kmeans afin d'être analysé.
 
 L'objectif de cette dernière phase consiste à analyser les différents clusters. En utilisant le résultat du clustering, le vocabularie fournit par la tf-idf vectorization ainsi que le corpus entier généré dans la phasedepré-processing, tout les éléments sont réunis afin de récupérer les sujets importants.
 
-L'idée consiste à analyser le centroide de chaque cluster. On trie ce vecteur par ordre décroissant et on récupérant les indices. Puis on garde uniquement un certain nombre de mots via un paramètre externe **nb_words_for_cluster**. Le paramètre
+L'idée consiste à analyser le centroide de chaque cluster. On trie ce vecteur par ordre décroissant et on récupérant les indices. Puis on garde uniquement un certain nombre de mots via un paramètre externe **nb_words_for_cluster**.
 
 La valeur finale du paramètre **nb_words_for_cluster** est le suivant:
 
@@ -268,7 +268,7 @@ data = {
 Sous forme d'un dictionnaire, chaque clé enregistre la période de temps sous forme d'un string de *biMonth* puis comme valeur un liste pour chaque cluster contenant elle-même une liste des mots importants. La visualization va trier le dictionnaire par rapport aux clé puis parcourir les cluster et leurs mots.
 
 # 6. Conclusion
-Ce projet a permis d'entraîner et de mettre en pratique plusieurs techniques dans un même panier. Du crawling initial à la visualisation finale en passant par des étapes de pré-processing et de clustering, ce projet fut varié et intéressant. Le crawling a pris du temps, car nous avons trouvés cela intéressant de tester des crawlers différents. De plus, chaque site web source étant différent, trois développeurs n'étaient pas de trop pour implémenter les différents parseurs. Cela nous a permis de collecter une importante quantité d'articles. Pour notre objectif, 130'000 articles étaient plus que bienvenus. 
+Ce projet a permis d'entraîner et de mettre en pratique plusieurs techniques de web mining. Du crawling initial à la visualisation finale en passant par des étapes de pré-processing et de clustering, ce projet fut varié et intéressant. Le crawling a pris du temps, car nous avons trouvés cela intéressant de tester des crawlers différents. De plus, chaque site web source étant différent, trois développeurs n'étaient pas de trop pour implémenter les différents parseurs. Cela nous a permis de collecter une importante quantité d'articles. En effet, pour notre objectif, 130'000 articles étaient plus que bienvenus. 
 
-Puis s'ensuivirent, en parallèle, des étapes de pré-processing et de clustering. Il a fallu nettoyer les articles et générer les différentes étapes de pré-processing. Ces étapes très importantes ont permis d'obtenir des meilleurs résultats. En parallèle, le clustering avançait et commençait à générer des thématiques intéressantes. Évidemment, certains choix se sont avérés mauvais et nous ont parfois forcés à revenir en arrière. Finalement, c'est en mettant le tout ensemble que nous pouvons déclarer aujourd'hui que nous sommes contents du résultat. Des améliorations pourraient être les bienvenus. Par exemple, il serait envisageable d'essayer certaines techniques pour garder les noms de ville ou les noms-prénoms ensemble. Un exemple serait que *New York* soit maintenu ensembles car il est quasiment impensable que ces deux mots soient dissociés l'un de l'autre. *Washington* ne souffre pas de ce défaut. De plus, bien qu'ayant été adaptés au fur et à mesure du projet, certains paramètres pourraient être testés davantage. Faute de temps, il a fallu se contenter de certaines valeurs de paramètres. Cependant, les résultats sont déjà très satisfaisants.
+Puis s'ensuivirent, en parallèle, des étapes de pré-processing et de clustering. Il a fallu nettoyer les articles et générer les différentes étapes de pré-processing. Ces étapes très importantes ont permis d'obtenir des meilleurs résultats. En parallèle, le clustering avançait et commençait à générer des thématiques intéressantes. Évidemment, certains choix se sont avérés mauvais et nous ont parfois forcés à revenir en arrière. Finalement, c'est en mettant le tout ensemble que nous pouvons déclarer aujourd'hui que nous sommes contents du résultat. Des améliorations pourraient être réalisées. Par exemple, il serait envisageable d'essayer certaines techniques pour garder les noms de ville ou les noms-prénoms ensemble. Un exemple serait que *New York* soit maintenu ensemble car il est quasiment impensable que ces deux mots soient dissociés l'un de l'autre dans un article traitant d'un sujet new-yorkais. *Washington* ne souffre pas de ce défaut. De plus, bien qu'ayant été adaptés au fur et à mesure du projet, certains paramètres pourraient être testés davantage. Faute de temps, il a fallu se contenter de certaines valeurs de paramètres. Cependant, les résultats sont déjà très satisfaisants.
 
